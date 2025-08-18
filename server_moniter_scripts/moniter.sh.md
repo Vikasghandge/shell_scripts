@@ -83,10 +83,10 @@ ENCRYPTED_CREDS="${ENCRYPTED_CREDS:-./configs/credentials.enc}"
 
 # Server Roles: IP -> Role
 declare -A SERVERS=(
-    ["192.168.1.10"]="DB"
+    ["192.168.1.10"]="DB"   # DB server ip
     ["192.168.1.20"]="DB"
-    ["192.168.1.30"]="APP"
-    ["192.168.1.40"]="REDISKAFKA"
+    ["192.168.1.30"]="APP"   # APP server IP
+    ["192.168.1.40"]="REDISKAFKA"  #  REDSIS KAFKA server IP
     ["192.168.1.50"]="NEWAPP"
 )
 
@@ -99,6 +99,7 @@ declare -A REQUIRED_PACKAGES=(
 )
 
 # Ports to Check: service_name -> port_number
+# here u can add port numbers as per your requirement.
 declare -A PORTS_TO_CHECK=(
     ["mysql"]="3306"
     ["redis"]="6379"
@@ -107,7 +108,7 @@ declare -A PORTS_TO_CHECK=(
     ["ansible"]="22"
     ["http"]="80"
     ["https"]="443"
-    ["nodejs"]="3000"
+   #  ["nodejs"]="3000"
     ["nginx"]="80"
 )
 
