@@ -91,7 +91,10 @@ kubectl get nodes ## this command will show the active nodes it should show mast
 kubectl get pods -A ## this will show active pods in the all namespaces.
 ---------------------------------------------------------------------------------------------------------------------------------
 # at the end apply this command this will start the nodes and also as well pods 
-kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+```
+kubectl apply -f https://reweave.azurewebsites.net/k8s/v1.29/net.yaml  # at the end run this command and then make sure change version according to ur cluster version.
+
+```
 
 
 
