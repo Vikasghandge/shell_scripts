@@ -228,3 +228,43 @@ done
 echo -e "\n${GREEN}✅ All $TOTAL_SERVERS servers checked successfully.${NC}" | tee -a "$LOGFILE"
 echo -e "${YELLOW}📁 Log saved: $LOGFILE${NC}"
 ```
+
+
+
+
+
+
+### For Storing creds create dir 
+```
+mkdir -p ./server_creds
+
+```
+
+for each server creds
+```
+nano ./server_creds/10.10.2.223.creds
+
+```
+
+```
+nano ./server_creds/10.10.1.162.creds
+
+```
+
+```
+nano ./server_creds/10.1.2.154.creds
+
+```
+
+```
+nano ./server_creds/10.10.2.223.creds
+
+```
+
+
+## store creds in this formate 
+```
+arcon
+Arc0nUn!x!@#$%!
+
+```
