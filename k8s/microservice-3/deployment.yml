@@ -1,1 +1,19 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-agent
+  template:
+    metadata:
+      labels:
+        app: service-agent
+    spec:
+      containers:
+      - name: service-agent
+        image: yourusername/service-agent-image:latest
+        ports:
+        - containerPort: 80
