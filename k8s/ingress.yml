@@ -1,1 +1,75 @@
 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: uba-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: uba.local
+    http:
+      paths:
+      - path: /ui
+        pathType: Prefix
+        backend:
+          service:
+            name: ui-epm-service
+            port:
+              number: 80
+
+      - path: /gateway
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway-epm-service
+            port:
+              number: 80
+
+      - path: /agent
+        pathType: Prefix
+        backend:
+          service:
+            name: service-agent
+            port:
+              number: 80
+
+      - path: /alert
+        pathType: Prefix
+        backend:
+          service:
+            name: service-alert
+            port:
+              number: 80
+
+      - path: /ka
+        pathType: Prefix
+        backend:
+          service:
+            name: service-ka
+            port:
+              number: 80
+
+      - path: /report
+        pathType: Prefix
+        backend:
+          service:
+            name: service-report
+            port:
+              number: 80
+
+      - path: /rule
+        pathType: Prefix
+        backend:
+          service:
+            name: service-rule
+            port:
+              number: 80
+
+      - path: /user
+        pathType: Prefix
+        backend:
+          service:
+            name: service-user
+            port:
+              number: 80
