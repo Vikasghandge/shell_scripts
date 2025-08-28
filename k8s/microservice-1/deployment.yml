@@ -1,1 +1,20 @@
 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-epm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui-epm
+  template:
+    metadata:
+      labels:
+        app: ui-epm
+    spec:
+      containers:
+      - name: ui-epm
+        image: yourusername/1-ui-epm-image:latest
+        ports:
+        - containerPort: 80
