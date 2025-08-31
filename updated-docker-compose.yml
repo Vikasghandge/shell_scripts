@@ -1,0 +1,130 @@
+## vikas updated docker-compose.yml
+version: '3.7'
+services:
+  1-ui-epm:
+    build: /home/arcon/testinternal/Docker/UI
+    image: 1-ui-epm-image
+    ports:
+      - "700:80"
+      - "800:443"
+    volumes:
+      - /UI/nginx.conf:/etc/nginx/nginx.conf
+      - /UI/certs:/etc/nginx/certs
+      - /UI/UBAUI:/usr/share/nginx/html
+      - /videos:/home/arcon/testinternal/videos
+      - /UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0' # Utilize one full CPU core
+          memory: 1G # 1 gigabyte of memory
+
+  2-gateway-epm:
+    build: /UI/UBAUI/UBA_APIGateway
+    image: 2-gateway-epm-image
+    ports:
+      - "801:443"
+      - "802:80"
+    volumes:
+#      - /UI/nginx.conf:/etc/nginx/nginx.conf
+#      - /UI/certs:/etc/nginx/certs
+#      - /UI/UBAUI/UBA_APIGateway:/usr/share/nginx/html
+#   - /videos:/app/videos
+      - /UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0' # Utilize one full CPU core
+          memory: 1G # 1 gigabyte of memory
+
+  3-service-agent:
+    build: /UBAMicroservice/AgentMicroservice
+    image: 3-service-agent-image
+    ports: 
+      - "8001:80"
+    volumes:
+ #     - /UBAMicroservice/AgentMicroservice:/usr/share/nginx/html
+      - /videos:/app/videos
+      - /UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0' # Utilize one full CPU core
+          memory: 2G # 1 gigabyte of memory
+
+  4-service-alert:
+    build: /UBAMicroservice/AlertMicroservice
+    image: 4-service-alert-image
+    ports: 
+      - "8002:80"
+    volumes:
+#     - /UBAMicroservice/AlertMicroservice:/usr/share/nginx/html
+        - /UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5' # Utilize half of a CPU core
+          memory: 512M # 512 megabytes of memory
+
+  5-service-ka:
+    build: /UBAMicroservice/KAMicroservice
+    image: 5-service-ka-image
+    ports: 
+      - "8003:80"
+    volumes:
+#      - /UBAMicroservice/KAMicroservice:/usr/share/nginx/html
+        - /UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5' # Utilize half of a CPU core
+          memory: 512M # 512 megabytes of memory
+
+  6-service-report:
+    build: /UBAMicroservice/ReportMicroservice
+    image: 6-service-report-image
+    ports: 
+      - "8005:80"
+    volumes:
+      - /videos:/home/arcon/testinternal/videos
+#      /UBAMicroservice/ReportMicroservice/Logs:/usr/src/app/Logs
+      - /UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0' # Utilize one full CPU core
+          memory: 1G # 1 gigabyte of memory
+
+  7-service-rule:
+    build: /UBAMicroservice/RuleMicroservice
+    image: 7-service-rule-image
+    ports: 
+      - "8004:80"
+    volumes:
+      - /UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5' # Utilize half of a CPU core
+          memory: 512M # 512 megabytes of memory
+
+  8-service-user:
+    build: /UBAMicroservice/UserMicroservice
+    image: 8-service-user-image
+    ports: 
+      - "8006:80"
+    volumes:
+      - /UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5' # Utilize half of a CPU core
+          memory: 512M # 512 megabytes of memory
