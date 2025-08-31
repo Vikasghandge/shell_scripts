@@ -1,0 +1,26 @@
+# Use the official Nginx image
+FROM nginx:latest
+
+# Remove default Nginx website
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy the UI files into the Nginx server root
+COPY ./UBAUI /usr/share/nginx/html
+
+# Create a directory for SSL certificates
+RUN mkdir -p /etc/nginx/ssl
+
+# Copy SSL certificates to the container
+COPY ./certs/CACert.crt /etc/nginx/ssl/
+COPY ./certs/wildcard_arconnet_com.crt /etc/nginx/ssl/
+COPY ./certs/wildcard_arconnet_com.key /etc/nginx/ssl/
+
+# Copy Nginx configuration file
+COPY ./nginx.conf /etc/nginx/
+
+# Expose ports 80 and 443
+EXPOSE 80
+EXPOSE 443
+
+# Command to run Nginx in the foreground
+CMD ["nginx", "-g", "daemon off;"]
