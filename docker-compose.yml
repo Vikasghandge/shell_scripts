@@ -1,0 +1,132 @@
+version: '3.7'
+services:
+  1-ui-epm:
+    build: /home/arcon/testinternal/Docker/UI
+    image: 1-ui-epm-image
+    ports:
+      - "700:80"
+      - "800:443"
+    volumes:
+      - /home/arcon/testinternal/Docker/UI/nginx.conf:/etc/nginx/nginx.conf
+      - /home/arcon/testinternal/Docker/UI/certs:/etc/nginx/certs
+      - /home/arcon/testinternal/Docker/UI/UBAUI:/usr/share/nginx/html
+      - /home/arcon/testinternal/videos:/home/arcon/testinternal/videos
+      - /home/arcon/testinternal/UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0' # Utilize one full CPU core
+          memory: 1G # 1 gigabyte of memory
+
+  2-gateway-epm:
+    build: /home/arcon/testinternal/Docker/UI/UBAUI/UBA_APIGateway
+    image: 2-gateway-epm-image
+    ports:
+      - "801:443"
+      - "802:80"
+    volumes:
+#      - /home/arcon/testinternal/Docker/UI/nginx.conf:/etc/nginx/nginx.conf
+#      - /home/arcon/testinternal/Docker/UI/certs:/etc/nginx/certs
+#      - /home/arcon/testinternal/Docker/UI/UBAUI/UBA_APIGateway:/usr/share/nginx/html
+      - /home/arcon/testinternal/videos
+      - /home/arcon/testinternal/UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0' # Utilize one full CPU core
+          memory: 1G # 1 gigabyte of memory
+
+  3-service-agent:
+    build: /home/arcon/testinternal/Docker/UBAMicroservice/AgentMicroservice
+    image: 3-service-agent-image
+    ports: 
+      - "8001:80"
+    volumes:
+ #     - /home/arcon/testinternal/Docker/UBAMicroservice/AgentMicroservice:/usr/share/nginx/html
+      - /home/arcon/testinternal/videos
+      - /home/arcon/testinternal/UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0' # Utilize one full CPU core
+          memory: 2G # 1 gigabyte of memory
+
+  4-service-alert:
+    build: /home/arcon/testinternal/Docker/UBAMicroservice/AlertMicroservice
+    image: 4-service-alert-image
+    ports: 
+      - "8002:80"
+    volumes:
+#     - /home/arcon/testinternal/Docker/UBAMicroservice/AlertMicroservice:/usr/share/nginx/html
+      - /home/arcon/testinternal/UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5' # Utilize half of a CPU core
+          memory: 512M # 512 megabytes of memory
+
+  5-service-ka:
+    build: /home/arcon/testinternal/Docker/UBAMicroservice/KAMicroservice
+    image: 5-service-ka-image
+    ports: 
+      - "8003:80"
+    volumes:
+#      - /home/arcon/testinternal/Docker/UBAMicroservice/KAMicroservice:/usr/share/nginx/html
+      - /home/arcon/testinternal/UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5' # Utilize half of a CPU core
+          memory: 512M # 512 megabytes of memory
+
+  6-service-report:
+    build: /home/arcon/testinternal/Docker/UBAMicroservice/ReportMicroservice
+    image: 6-service-report-image
+    ports: 
+      - "8005:80"
+    volumes:
+#      - /home/arcon/testinternal/Docker/UBAMicroservice/ReportMicroservice:/usr/src/app
+      - /home/arcon/testinternal/videos:/home/arcon/testinternal/videos
+#      - /home/arcon/testinternal/Log:/usr/src/app/app.log
+      - /home/arcon/testinternal/UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0' # Utilize one full CPU core
+          memory: 1G # 1 gigabyte of memory
+
+  7-service-rule:
+    build: /home/arcon/testinternal/Docker/UBAMicroservice/RuleMicroservice
+    image: 7-service-rule-image
+    ports: 
+      - "8004:80"
+    volumes:
+#      - /home/arcon/testinternal/Docker/UBAMicroservice/RuleMicroservice:/usr/share/nginx/html
+      - /home/arcon/testinternal/UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5' # Utilize half of a CPU core
+          memory: 512M # 512 megabytes of memory
+
+  8-service-user:
+    build: /home/arcon/testinternal/Docker/UBAMicroservice/UserMicroservice
+    image: 8-service-user-image
+    ports: 
+      - "8006:80"
+    volumes:
+#      - /home/arcon/testinternal/Docker/UBAMicroservice/UserMicroservice:/usr/share/nginx/html
+      - /home/arcon/testinternal/UpdateFile:/usr/src/app/UpdateFile
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5' # Utilize half of a CPU core
+          memory: 512M # 512 megabytes of memory
