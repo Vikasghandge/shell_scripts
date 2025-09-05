@@ -72,7 +72,12 @@ sudo apt-get update  # update the local packages.
 sudo apt-get install -y kubelet kubeadm kubectl   ## install the kubelet, kubedum, kubectl.
 sudo apt-mark hold kubelet kubeadm kubectl
 ---------------------------------------------------------------------------------------------------------------------------------------
-kubeadm init --apiserver-advertise-address <private_ip of the (master) server> --pod-network-cidr 10.244.0.0/16 --cri-socket unix:///var/run/containerd/containerd.sock
+# kubeadm init --apiserver-advertise-address <private_ip of the (master) server> --pod-network-cidr 10.244.0.0/16 --cri-socket unix:///var/run/containerd/containerd.sock
+
+Try To Use This Command.
+```
+kubeadm init
+```
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # above give command will generate something like this
