@@ -1,4 +1,4 @@
-root@Mysql-DB:/home/ubuntu# cat dynamic_backup_restore.sh
+
 #!/bin/bash
 
 echo "===== MySQL Docker Management Script ====="
