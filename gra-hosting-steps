@@ -1,0 +1,54 @@
+GRA Application Hosting steps on the Docker All steps.
+
+Folder Sturcture,
+
+Base Folder  = Folder_name == GRA_V15
+
+inside that we have 6 folders and one will create docker-compose file.
+1) graDatabase
+2) graFiles
+3) graJobs
+4) graLogs
+5) graServices
+6) graWindowscomponents
+7) docker-compose.yml
+
+first step create mysql database container example
+docker run -d --name graMysql -e MYSQL_ROOT_PASSWORD=pass@123 -v Gra_v15-data:/var/lib/mysql --network <put name here that network where your service are connected> restart=always -p 3306:3306  mysql:8.0
+
+Note - pls make sure your graServices network and gramysql container network should be same otherwise that can't communicate. pbls verify.
+
+now next step take the access of your container using mysql-workbranch connect via mysql-workbranch.
+and create two databases.
+1) graauditdb
+2) gradb 
+now go into your gra package.
+path =  /GRA_v15/graDatabase/dbscripts/dbscript_MYSQL thier you will se to file 1) graauditdb 2) gradb copy that sql scripts and paste it into our 
+mysql database container using mysql workbranch.
+make sure are are pasteing correct scripts in correct database.
+
+now go to the path GRA_v15/graServices/config
+here you will se main 3 files
+1) gra.json 2) gra.ini 3) ocelot.json
+now first thing is edit gra.json inside that file find '''Dbname' and add your databases names there which u have created in the mysql container
+example = grasuditdb and gradb so then can access make sure your mysql database names and gra.json file database name should be match.
+
+2) now gra.ini 
+cat gra ini copy it and go to the disk path  press windows+R add following path \\dsk030\share\GRAArconEncDecutlity tools open it
+paste your init file there decrypt it and add the follwing info or replace like database name which will your mysql-container name then then database password username and using port  add port which is your container running database. then again encrypt that file again and add in gra.ini file.
+
+3) use docker-compose ps list the services name and replace the servces names in ocelot.json
+
+also make sure in your nginx.conf add your domain name exaample vikasgra.arconnet.com also make the host entry of this domain
+prees window+R type = drivers in etc hosts make entry <your server_ip > and <your domain name>
+make sure you docker-compose file is correct check all ports path make sure there is no conflict then use command 
+docker-compose build then docker-compose up -d  the you can access domian vikasgra.arconnet.com:{port}
+
+aslo make sure certs are present on their correct place then make sure every service and job has docker file 
+
+
+
+
+
+
+
