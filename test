@@ -22,7 +22,8 @@ urls = [
     "https://ipg_dea8b8f4.arcon-labs.com/",
     "https://arcon_0c5f7273.arcon-labs.com/",
     "https://icc_39d3a2e9.arcon-labs.com/",
-    "https://mfaagent_test_e61e99e2.arcon-labs.com/"
+    "https://mfaagent_test_e61e99e2.arcon-labs.com/",
+    "https://epm_eu.arcon-labs.com"
 ]
 
 def check_url_accessibility(url):
@@ -47,3 +48,25 @@ for url in urls:
     print(f"{url:80} → {status}")
 
 #https://epm_eu.arcon-labs.com
+
+
+###############################################################################
+# 1. Update system
+sudo apt update -y
+
+# 2. Install Python 3 (if not already)
+sudo apt install python3 -y
+
+# 3. Install virtual environment package
+sudo apt install python3-venv -y
+
+# 4. Create and activate a virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# 5. Install required Python libraries
+pip install requests urllib3
+
+# 6. Run your script
+python3 check_urls.py
+
