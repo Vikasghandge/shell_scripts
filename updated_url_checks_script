@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+import requests
+import urllib3
+from colorama import Fore, Style, init
+from datetime import datetime
+import pytz
+import os
+
+# Initialize colorama
+init(autoreset=True)
+
+# Disable SSL warnings (optional)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# URL List
+urls = [
+    "https://nationalbankoffujairaj_0c5f7273.arcon-labs.com/",
+    "https://europe_db605e8f.arcon-labs.com/",
+    "https://ramsoft_03d0210e.arcon-labs.com/",
+    "https://cloudedge_00906981.arcon-labs.com/",
+    "https://idemia_30b01a61.arcon-labs.com/",
+    "https://iciciusecase_2585ae72.arcon-labs.com/",
+    "https://maxlifeinsurance_f88bb6ea.arcon-labs.com/",
+    "https://tcs.arcon-labs.com/",
+    "https://vishalmart.arcon-labs.com/",
+    "https://us_epm_a8cfcd74.arcon-labs.com/",
+    "https://demoepm_85ccd47d.arcon-labs.com/",
+    "https://grmu_8f45f4fa.arcon-labs.com/",
+    "https://iamexperts_3090ad7f.arcon-labs.com/",
+    "https://ipg_dea8b8f4.arcon-labs.com/",
+    "https://arcon_0c5f7273.arcon-labs.com/",
+    "https://icc_39d3a2e9.arcon-labs.com/",
+    "https://mfaagent_test_e61e99e2.arcon-labs.com/",
+    "https://epm_eu.arcon-labs.com"
+]
+
+# Log file path
+LOG_FILE = "url_check.log"
+
+# Set Indian timezone
+IST = pytz.timezone("Asia/Kolkata")
+
+# Function to get current IST time
+def current_ist_time():
+    return datetime.now(IST).strftime("%Y-%m-%d %H:%M:%S")
+
+# Function to check URL accessibility
+def check_url_accessibility(url):
+    try:
+        response = requests.get(url, timeout=5, verify=False)
+        if response.status_code == 200:
+            return f"{Fore.GREEN}✅ Accessible{Style.RESET_ALL}"
+        else:
+            return f"{Fore.YELLOW}⚠️ HTTP {response.status_code}{Style.RESET_ALL}"
+    except requests.exceptions.SSLError:
+        return f"{Fore.MAGENTA}🔒 SSL Error{Style.RESET_ALL}"
+    except requests.exceptions.ConnectionError:
+        return f"{Fore.RED}❌ Connection Error{Style.RESET_ALL}"
+    except requests.exceptions.Timeout:
+        return f"{Fore.CYAN}⌛ Timeout{Style.RESET_ALL}"
+    except Exception as e:
+        return f"{Fore.YELLOW}⚠️ Error: {type(e).__name__}{Style.RESET_ALL}"
+
+# Start
+print(Fore.CYAN + "\n🌐 Checking URL accessibility..." + Style.RESET_ALL)
+print(Fore.LIGHTBLACK_EX + f"🕒 Started at: {current_ist_time()} (IST)\n" + Style.RESET_ALL)
+
+accessible = 0
+errors = 0
+
+# Log header
+with open(LOG_FILE, "a") as log:
+    log.write("\n" + "="*80 + "\n")
+    log.write(f"Run at: {current_ist_time()} (IST)\n")
+    log.write("="*80 + "\n")
+
+# Loop through URLs
+for url in urls:
+    status = check_url_accessibility(url)
+    print(f"{url:80} → {status}")
+
+    # Write to log (without color codes)
+    clean_status = status.replace(Fore.GREEN, "").replace(Fore.RED, "").replace(Fore.YELLOW, "").replace(Fore.MAGENTA, "").replace(Fore.CYAN, "").replace(Style.RESET_ALL, "")
+    with open(LOG_FILE, "a") as log:
+        log.write(f"{url:80} → {clean_status}\n")
+
+    if "✅ Accessible" in status:
+        accessible += 1
+    else:
+        errors += 1
+
+# Summary
+summary = f"""
+{Fore.BLUE}
+-------------------------------------------------
+📊 Summary Report
+-------------------------------------------------
+✅ Accessible URLs : {accessible}
+❌ Unreachable URLs : {errors}
+🕒 Completed at     : {current_ist_time()} (IST)
+📁 Log file saved   : {os.path.abspath(LOG_FILE)}
+-------------------------------------------------
+{Style.RESET_ALL}
+"""
+
+print(summary)
+
+# Append summary to log file
+with open(LOG_FILE, "a") as log:
+    log.write("\nSummary:\n")
+    log.write(f"Accessible: {accessible}\n")
+    log.write(f"Unreachable: {errors}\n")
+    log.write(f"Completed at: {current_ist_time()} (IST)\n")
+    log.write("="*80 + "\n\n")
