@@ -1,0 +1,64 @@
+ telnet localhost 9100
+ 1990  last reboot
+ 1991  sudo journalctl --since "yesterday" --until "today"
+ 1992  sudo dmesg -T | grep -i "killed process"
+ 1993  df -h
+ 1994  sudo grep -i "no space" /var/log/syslog
+ 1995  sudo dmesg -T | tail -50
+ 1996  last -x | head
+ 1997  cat /var/log/apt/history.log | less
+ 1998  sudo zgrep "linux-image" /var/log/apt/history.log* 2>/dev/null
+ 1999  ls
+ 2000  cd /var/log/
+ 2001  ls -ltrh
+ 2002  ls -ltrh syslog*
+ 2003  less syslog.1
+ 2004  service unattended-upgrades status
+ 2005  journalctl --list-boots
+ 2006  grep -i 'reboot\|shutdown\|poweroff\|crash' syslog.1
+ 2007  grep -B2 -A2 -i 'reboot\|shutdown\|poweroff\|crash' syslog.1
+ 2008  grep -B5 -A2 -i 'reboot\|shutdown\|poweroff\|crash' syslog.1
+ 2009  grep -B10 -A2 -i 'reboot\|shutdown\|poweroff\|crash' syslog.1
+ 2010  cat /etc/passwd| grep -i slice
+ 2011  grep -i 'panic' kern.log
+ 2012  grep -B5 -i 'panic' kern.log
+ 2013  grep -B15 -i 'panic' kern.log
+ 2014  grep -B15 -A10 -i 'panic' kern.log
+ 2015  grep -B15 -A20 -i 'panic' kern.log
+ 2016  grep -B15 -A30 -i 'panic' kern.log
+ 2017  grep -B10 -A2 -i 'reboot\|shutdown\|poweroff\|crash' auth.log
+ 2018  grep -i sudo auth.log
+ 2019  ls -ltrh auth.log*
+ 2020  less auth.log
+ 2021  grep 'Oct 26 20:' auth.log | less
+ 2022  less auth.log
+ 2023  grep -v 'CRON[' auth.log | grep
+ 2024  grep -v 'CRON[' auth.log | grep 'Oct 26 20:' | less
+ 2025  grep -v 'CRON\[' auth.log | grep 'Oct 26 20:' | less
+ 2026  grep -v 'CRON' auth.log | grep 'Oct 26 20:' | less
+ 2027  cat auth.log | grep -v CRON | less
+ 2028  head auth.log
+ 2029  ls -ltrh dmesg
+ 2030  less dmesg
+ 2031  dmesg  | grep -i 'error\|panic\|oops\|hardware\|thermal'
+ 2032  crontab -l
+ 2033  grep -r 'shutdown\|reboot' /etc/cron* /var/spool/cron/
+ 2034  grep -i 'update\|upgrade' /var/log/dpkg.log
+ 2035  df -h
+ 2036  grep -i power syslog
+ 2037  grep -B4 -i power syslog
+ 2038  nano /etc/systemd/logind.conf
+ 2039  less syslog.1
+ 2040  head syslog.1
+ 2041  cat syslog.1 | grep ''
+ 2042  cat syslog.1 | grep 'Oct 19' | less
+ 2043  cat syslog.1 | grep 'Oct 25' | less
+ 2044  grep -B4 -i power syslog
+ 2045  grep -B4 -i power syslog.1
+ 2046  cat syslog.1 | grep 'Oct 25' | less
+ 2047  cat syslog.1 | grep 'Oct 22' | less
+ 2048  cat syslog.1 | grep 'Oct 23' | less
+ 2049  nano /etc/systemd/logind.conf
+ 2050  ls
+ 2051  history
+root@ip-12-200-2-217:/var/log#
